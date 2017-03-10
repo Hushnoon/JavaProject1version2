@@ -35,12 +35,12 @@
 </div>
 <div class="row">
 	<div class="container col-md-col-md-8 col-md-offset-2 jumbotron">
-		<table id="categoryTable" class="table table-hover">
+		<table id="categoryTable" class="table table-bordered table-hover">
 			<thead>
 				<tr>
-					<th>Name</th>
-					<th>Image</th>
-					<th></th>
+					<th>CATEGORY NAME</th>
+					<th>IMAGE URL</th>
+					<th>IMAGES</th>
 					<th></th>
 				</tr>
 			</thead>

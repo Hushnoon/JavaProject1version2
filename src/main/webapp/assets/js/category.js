@@ -1,4 +1,5 @@
 $(function() {
+	console.log('')
 	$('#categoryTable')
 			.DataTable(
 					{
@@ -16,7 +17,9 @@ $(function() {
 								{
 									data : null,
 									mRender : function(data, type, row) {
-										return '<img src="${categoryImage}/"'+data.imageUrl+'" height="50" width="50">';
+										console.log('hello');
+										console.log(row.imageUrl);
+										return '<img src="/javaproject1/resources/images/category/'+row.imageUrl+'" height="60" width="60">';
 									}
 								},
 								{
@@ -24,7 +27,7 @@ $(function() {
 									mRender : function(data, type, row) {
 										return '<a class="btn btn-primary" href="/javaproject1/admin/show/category/'
 												+ data.id
-												+ '">Edit</a> &nbsp;&nbsp;<a class="btn btn-primary" href="/javaproject1/admin/delete/category/'+data.id+'">Delete</a> ';
+												+ '">Edit</a> &nbsp;&nbsp;&nbsp;&nbsp;<a class="btn btn-primary" href="/javaproject1/admin/delete/category/'+data.id+'">Delete</a> ';
 									}
 								} 
 								]

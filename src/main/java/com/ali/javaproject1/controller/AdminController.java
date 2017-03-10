@@ -35,6 +35,8 @@ public class AdminController {
 	@Autowired
 	HttpServletRequest request;
 
+	List<Category> categoryList;
+	
 	// when admincontroller page will load
 	@GetMapping("/category")
 	public String newCategory(ModelMap model) {
@@ -100,7 +102,7 @@ public class AdminController {
 		return mv;
 	}
 
-	// ------------- Delete category----------------
+	// ------------- Delete category
 	@GetMapping(value = { "/delete/category/{id}" })
 	public String deleteCategoryById(@PathVariable("id") int id) {
 		if (categoryDao.delete(categoryDao.getCategory(id))) {
@@ -109,25 +111,35 @@ public class AdminController {
 		return "redirect:/admin/category";
 	}
 
-	// ----------------- Deafault method on /admin/product page----------------
+	// ----------------- Deafault method on /admin/product page
 	@Autowired
 	private ProductDao productDao;
 
 	@GetMapping("/product")
 	public String newProduct(ModelMap model) {
+		
+		categoryList=categoryDao.listCategories();
 		Product product = new Product();
 		model.addAttribute("product", product);
-		model.addAttribute("categoryList", categoryDao.listCategories());
+		model.addAttribute("categoryList",categoryList);
 		model.addAttribute("userClickProductAdmin", true);
 		return "index";
 	}
 
-	// ----------------------Add and Update product----------------------
+	//------------Accessing products list
+	@GetMapping(value = { "/all/product" })
+	@ResponseBody
+	public List<Product> showAllProduct() {
+		return productDao.listProducts();
+	}
+	
+	// ------------Add and Update product
 	@PostMapping("/add/product")
 	public String saveProduct(@Valid Product product, BindingResult result, ModelMap model) {
 		if (result.hasErrors()) {
 			System.out.println("Product Errors:" + result.getErrorCount());
 			model.addAttribute("product", product);
+			model.addAttribute("categoryList",categoryList);
 			model.addAttribute("userClickProductAdmin", true);
 			return "index";
 		} else {
@@ -163,12 +175,34 @@ public class AdminController {
 				productDao.update(product);
 
 			}
+			model.addAttribute("categoryList",categoryList);
 			model.addAttribute("product", new Product());
 			model.addAttribute("userClickProductAdmin", true);
 			return "index";
 		}
 	}
 
+
+	// ------------Getting product by product id
+	@GetMapping(value = { "/show/product/{id}" })
+	public ModelAndView getProductById(@PathVariable("id") int id) {
+		ModelAndView mv = new ModelAndView("index");
+		mv.addObject("categoryList",categoryList);
+		mv.addObject("product", productDao.getProduct(id));
+		mv.addObject("userClickProductAdmin", true);
+		return mv;
+	}
+
+	// ------------Delete product
+	@GetMapping(value = { "/delete/product/{id}" })
+	public String deleteProductById(@PathVariable("id") int id) {
+		if (productDao.delete(productDao.getProduct(id))) {
+
+		}
+		return "redirect:/admin/product";
+	}
+	
+	//----------Code to upload image on server
 	public String UploadImage(String imageOf, MultipartFile file) {
 		try {
 			// ----------Code to upload files on server

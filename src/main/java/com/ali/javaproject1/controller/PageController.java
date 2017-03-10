@@ -27,11 +27,5 @@ public class PageController {
 		ModelAndView mv = new ModelAndView("login");
 		return mv;
 	}
-	/*
-	 * @RequestMapping(value="/register") public ModelAndView register() {
-	 * ModelAndView mv=new ModelAndView("register"); return mv; }
-	 * 
-	 * @RequestMapping(value="/productlist") public ModelAndView productList() {
-	 * ModelAndView mv=new ModelAndView("product"); return mv; }
-	 */
+
 }

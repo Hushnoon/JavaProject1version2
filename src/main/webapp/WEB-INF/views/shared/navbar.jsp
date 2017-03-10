@@ -13,7 +13,7 @@
 				<div class="collapse navbar-collapse" id="myNavbar">
 					<ul class="nav navbar-nav navbar-right rightnav">
 	
-						<li><a href="/project1/productlist">PRODUCTS</a></li>
+						<li><a href="/javaproject1/user/category">CATEGORY</a></li>
 						<li><a href="#">ABOUT US</a></li>
 						<li><a href="#">CONTACT US</a></li>
 						<li class="dropdown">
@@ -22,7 +22,7 @@
 					      <ul class="dropdown-menu">
 					         <li><a href="/javaproject1/admin/category">CATEGORY</a></li>
 					         <li><a href="/javaproject1/admin/product">PRODUCT</a></li>
-					         <li><a href="#">Orders</a></li>
+					         <!-- <li><a href="#">Orders</a></li> -->
 					      </ul>
 					    </li>
 						<li><a href="/javaproject1/login"><span
