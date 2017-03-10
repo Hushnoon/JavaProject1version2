@@ -1,35 +1,33 @@
 @font-face {
-    font-family: myFont;
-    src: url('../font/DansDisneyv5.ttf');
+	font-family: myFont;
+	src: url('../font/DansDisneyv5.ttf');
 }
-.logo
-{
-	 font-family: myFont;
-	color:White;
+
+.logo {
+	font-family: myFont;
+	color: White;
 	font-size: 40px;
 }
 
-.rightnav
-{
+.rightnav {
 	font-weight: bold;
 }
-.shopfor
-{
-	 font-family: myFont;;
+
+.shopfor {
+	font-family: myFont;;
 	background-color: #E5E8E8;
 }
-.img1
-{ 
-	display: block; 
-} 
-.wrap1 
-{ 
-	max-width: 70%; 
-	margin: 30px 0px; 
-} 
-.align-left1 
-{ 
-	float: left; 
-	margin-right: 30px; 
+
+.img1 {
+	display: block;
 }
 
+.wrap1 {
+	max-width: 70%;
+	margin: 30px 0px;
+}
+
+.align-left1 {
+	float: left;
+	margin-right: 30px;
+}

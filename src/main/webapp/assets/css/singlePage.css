@@ -1,0 +1,19 @@
+.jumbotron {
+	background-color: #5D6D7E;
+}
+
+.control-label {
+	color: white;
+}
+
+.page-header {
+	border-color: black;
+	border-width: 6px;
+	color: #6C3483;
+	font-style: bold;
+}
+
+.has-error
+{
+	color:Red;
+}
