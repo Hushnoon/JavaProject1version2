@@ -19,10 +19,11 @@
 <s:url value="/resources/css" var="css" />
 <s:url value="/resources/font" var="font" />
 <s:url value="/resources/images" var="images" />
-<s:url value="/resources/images/category" var="categoryImage" />
+<%-- <s:url value="/resources/images/category/" var="categoryImage" /> --%>
 
 <!-- Reference to data table files -->
 <script src="${js}/category.js"></script>
+<script src="${js}/product.js"></script>
 <script src="${js}/jquery.dataTables.js"></script>
 <script src="${js}/dataTables.bootstrap.js"></script>
 

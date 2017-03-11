@@ -4,7 +4,7 @@
 		<h4>Categories</h4>
 		<ul class="list-group">
 			<c:forEach items="${cat}" var="ct">
-				<li class="list-group-item"><a href="/javaproject1/user/product/showby/category/"+ct.id>${ct.name}</a></li>
+				<li class="list-group-item"><a href="/javaproject1/user/category/${ct.id}/products">${ct.name}</a></li>
 			</c:forEach>
 		</ul>
 	</div>
