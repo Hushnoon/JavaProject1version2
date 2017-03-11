@@ -50,9 +50,9 @@
 									{
 										data : null,
 										mRender : function(data, type, row) {
-											return '<a class="btn btn-primary" href="/javaproject1/user/add/product/toCart/'
+											return '<a class="btn btn-info" href="/javaproject1/user/add/product/toCart/'
 												+ data.id
-												+ '">Add To Cart</a>';
+												+ '"><span class="glyphicon glyphicon-shopping-cart"></span>Add To Cart</a>';
 										}
 									} ]
 						});

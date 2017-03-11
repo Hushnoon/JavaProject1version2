@@ -25,6 +25,10 @@
 									<!-- <li><a href="#">Orders</a></li> -->
 								</ul></li>
 						</security:authorize>
+						<security:authorize access="hasAuthority('CUSTOMER')">
+							<li><a href="/javaproject1/user/view/cart">
+									<span class="glyphicon glyphicon-shopping-cart"></span></a></li>
+						</security:authorize>
 						<security:authorize access="isAuthenticated()">
 							<li><a href="/javaproject1/logout">LOGOUT</a></li>
 						</security:authorize>

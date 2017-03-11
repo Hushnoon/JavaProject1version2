@@ -64,27 +64,102 @@ public class UserController {
 
 		Cart cart = (Cart) user.getCart();
 		CartItem cartItem = new CartItem();
-		Product product = productDao.getProduct(id);
+		int flag = 0;
 
-		cartItem.setCart(cart);
-		cartItem.setProduct(product);
-		// On clicking Add to cart it will always add 1 unit for more user need
-		// to visit "View Cart List" option
-		cartItem.setQuantity(1);
-		cartItem.setTotalPrice(cartItem.getQuantity() * product.getPrice());
+		for (CartItem item : cart.getCartItems()) {
+			if ((item.getProduct()).getId() == id) {
+				cartItem = item;
+				flag++;
+				break;
+			}
+		}
 
-		// Update cart table
-		cart.setTotalItems(cart.getTotalItems() + 1);
-		int total = (int) (cart.getGrandTotal() + cartItem.getTotalPrice());
-		cart.setGrandTotal(total);
-		//need to add if
-		cartItemDao.add(cartItem);
-		
-		//Returning cartItemList to viewCart page 
-		ModelAndView mv=new ModelAndView("index");
-		mv.addObject("cartItemList",cart.getCartItems());
-		mv.addObject("userViewCart",true);
+		if (flag == 0) {
+
+			Product product = productDao.getProduct(id);
+			cartItem.setCart(cart);
+			cartItem.setProduct(product);
+
+			// On clicking Add to cart it will always add 1 unit. For more, user
+			// need to visit "View Cart List" option
+			cartItem.setQuantity(1);
+			cartItem.setTotalPrice(cartItem.getQuantity() * product.getPrice());
+
+			// Update cart table
+			cart.setTotalItems(cart.getTotalItems() + 1);
+			int total = (int) (cart.getGrandTotal() + cartItem.getTotalPrice());
+			cart.setGrandTotal(total);
+			// need to add if
+			cartItemDao.add(cartItem);
+		} else {
+			Product product = cartItem.getProduct();
+			// Update cartItem
+			int oldQuantity = cartItem.getQuantity();
+			cartItem.setQuantity(cartItem.getQuantity() + 1);
+			cartItem.setTotalPrice(product.getPrice() * cartItem.getQuantity());
+
+			// while Updating cart, only update grandtotal as we are updating
+			// existing item quantity
+			cart.setGrandTotal(cart.getGrandTotal() + (cartItem.getQuantity() - oldQuantity) * product.getPrice());
+			cartItemDao.update(cartItem);
+		}
+		// Returning cartItemList to viewCart page
+		ModelAndView mv = new ModelAndView("index");
+		mv.addObject("cartItemList", cart.getCartItems());
+		mv.addObject("userViewCart", true);
 		return mv;
 	}
 
+	@GetMapping("/view/cart")
+	public ModelAndView viewCartList() {
+		Principal principal = request.getUserPrincipal();
+		User user = userDao.getUserByUsername(principal.getName());
+		Cart cart = (Cart) user.getCart();
+		ModelAndView mv = new ModelAndView("index");
+		mv.addObject("cartItemList", cart.getCartItems());
+		mv.addObject("userViewCart", true);
+		return mv;
+
+	}
+
+	@GetMapping("cartitem/plus/{id}")
+	public String incrementCartItem(@PathVariable("id") int id) {
+		CartItem item = cartItemDao.getCartItem(id);
+
+		Product product = item.getProduct();
+		// Update cartItem
+		int oldQuantity = item.getQuantity();
+		item.setQuantity(item.getQuantity() + 1);
+		item.setTotalPrice(product.getPrice() * item.getQuantity());
+
+		// while Updating cart, only update grandtotal as we are updating
+		// existing item quantity
+		Cart cart = item.getCart();
+		cart.setGrandTotal(cart.getGrandTotal() + (item.getQuantity() - oldQuantity) * product.getPrice());
+		cartItemDao.update(item);
+		return "redirect:/user/view/cart";
+
+	}
+
+	@GetMapping("cartitem/minus/{id}")
+	public String decrementCartItem(@PathVariable("id") int id) {
+		CartItem item = cartItemDao.getCartItem(id);
+
+		Product product = item.getProduct();
+		// Update cartItem
+		int oldQuantity = item.getQuantity();
+		item.setQuantity(item.getQuantity() - 1);
+		//it will deduct if item quantity is >= 0
+		if (item.getQuantity() >= 0) {
+			item.setTotalPrice(product.getPrice() * item.getQuantity());
+
+			// while Updating cart, only update grandtotal as we are updating
+			// existing item quantity
+			Cart cart = item.getCart();
+			cart.setGrandTotal(cart.getGrandTotal() + (item.getQuantity() - oldQuantity) * product.getPrice());
+			cartItemDao.update(item);
+		}
+		return "redirect:/user/view/cart";
+
+	}
 }
