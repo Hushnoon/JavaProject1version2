@@ -13,7 +13,7 @@
 				<div class="collapse navbar-collapse" id="myNavbar">
 					<ul class="nav navbar-nav navbar-right rightnav">
 
-						<li><a href="/javaproject1/user/product/all">ALL PRODUCTS</a></li>
+						<li><a href="/javaproject1/products">ALL PRODUCTS</a></li>
 						<li><a href="#">ABOUT US</a></li>
 						<li><a href="#">CONTACT US</a></li>
 						<security:authorize access="hasAuthority('ADMIN')">

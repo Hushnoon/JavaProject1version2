@@ -54,12 +54,22 @@
 				<%@ include file="./admin/adminProduct.jsp"%>
 			</c:if>
 			
-			<!-- Loading product page for users -->
+			<!-- Loading all products page for everyone -->
+			<c:if test="${userClickAllProducts==true}">
+				<%@ include file="./allProducts.jsp"%>
+			</c:if>
+			
+			<!-- Loading viewcart page for user -->
+			<c:if test="${userViewCart==true}">
+				<%@ include file="./viewCart.jsp"%>
+			</c:if>
+			
+			<!-- Loading product page for users by category -->
 			<c:if test="${userClickProducts==true}">
 				<script>
 					window.categoryId=${catid};
 				</script>
-				<%@ include file="./products.jsp"%>
+				<%@ include file="./productsByCategory.jsp"%>
 			</c:if>
 		</div>
 		
