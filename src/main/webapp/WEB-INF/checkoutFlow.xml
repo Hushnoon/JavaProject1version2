@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/webflow http://www.springframework.org/schema/webflow/spring-webflow.xsd">
+
+	<!-- It will create an instance and keep it inside flowScope -->
+
+	<var name="address" class="com.ali.javaproject1.backend.model.Address" />
+
+	<!-- Executed when webFlow is triggered -->
+	<on-start>
+		<!-- Registrationhandler is java class available through annotated Registrationhandler.java 
+			class.here we are calling it’s initFlow() method. -->
+		<evaluate expression="checkoutHandler.initFlow()" result="flowScope.checkoutModel" />
+	</on-start>
+
+	<!-- if not specified the first view state is the starting state -->
+	<view-state id="start" view="checkoutProcess/checkout" 	model="flowscope.checkoutModel">
+		<transition on="add" to="addShippingAddress" />
+		<transition on="next" to="orderSummary"/>
+		<on-exit>
+			<evaluate expression="checkoutHandler.setShippingAddress(checkoutModel)"></evaluate>
+		</on-exit>
+	</view-state>
+
+	<view-state id="addShippingAddress" view="checkoutProcess/newaddress" model="address">
+		<transition on="add" to="orderSummary" />
+		<transition on="back" to="start"/>
+		<on-exit>
+			<evaluate expression="checkoutHandler.saveNewShippingAddress(checkoutModel,address)"></evaluate>
+		</on-exit>
+	</view-state>
+
+	<view-state id="orderSummary" view="checkoutProcess/orderSummary" model="flowscope.checkoutModel">
+		<transition on="submit" to="payment" />
+	</view-state>
+
+	<view-state id="payment" view="checkoutProcess/payment" model="flowscope.checkoutModel" >
+		<transition on="submit" to="placeOrder" />
+	</view-state>
+
+	<action-state id="placeOrder">
+		<evaluate expression="checkoutHandler.saveOrder(checkoutModel)"></evaluate>
+		<transition on="success" to="success"/>
+		<transition on="failure" to="failure"/>
+	</action-state>
+	
+	<end-state id="sucess" view="checkoutProcess/success"/>
+</flow>

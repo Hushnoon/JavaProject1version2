@@ -1,12 +1,14 @@
 package com.ali.javaproject1.controller;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,8 +56,9 @@ public class UserController {
 		return (categoryDao.getCategory(id)).getProducts();
 	}
 
+	//---Add new cart item and update existing cart item
 	@GetMapping("/add/product/toCart/{id}")
-	public ModelAndView AddToCart(@PathVariable("id") int id) {
+	public String AddToCart(@PathVariable("id") int id) {
 		User user;
 		Principal principal = request.getUserPrincipal();
 
@@ -91,6 +94,7 @@ public class UserController {
 			cart.setGrandTotal(total);
 			// need to add if
 			cartItemDao.add(cartItem);
+			cartDao.update(cart);
 		} else {
 			Product product = cartItem.getProduct();
 			// Update cartItem
@@ -102,26 +106,35 @@ public class UserController {
 			// existing item quantity
 			cart.setGrandTotal(cart.getGrandTotal() + (cartItem.getQuantity() - oldQuantity) * product.getPrice());
 			cartItemDao.update(cartItem);
+			cartDao.update(cart);
 		}
 		// Returning cartItemList to viewCart page
-		ModelAndView mv = new ModelAndView("index");
+		/*ModelAndView mv = new ModelAndView("index");
 		mv.addObject("cartItemList", cart.getCartItems());
-		mv.addObject("userViewCart", true);
-		return mv;
+		mv.addObject("userViewCart", true);*/
+		return "redirect:/user/view/cart";
 	}
 
+	//---View Entire cart
 	@GetMapping("/view/cart")
 	public ModelAndView viewCartList() {
 		Principal principal = request.getUserPrincipal();
 		User user = userDao.getUserByUsername(principal.getName());
 		Cart cart = (Cart) user.getCart();
 		ModelAndView mv = new ModelAndView("index");
-		mv.addObject("cartItemList", cart.getCartItems());
+		List<CartItem> list = cart.getCartItems();
+		if (list.size() > 0) {
+			mv.addObject("cartItemList", list);
+		} else {
+			mv.addObject("cartResultZero",0);
+		}
+		mv.addObject("cartTotal",cart.getGrandTotal());
 		mv.addObject("userViewCart", true);
 		return mv;
 
 	}
 
+	// ---Increase quantity of cart item	
 	@GetMapping("cartitem/plus/{id}")
 	public String incrementCartItem(@PathVariable("id") int id) {
 		CartItem item = cartItemDao.getCartItem(id);
@@ -137,10 +150,12 @@ public class UserController {
 		Cart cart = item.getCart();
 		cart.setGrandTotal(cart.getGrandTotal() + (item.getQuantity() - oldQuantity) * product.getPrice());
 		cartItemDao.update(item);
+		cartDao.update(cart);
 		return "redirect:/user/view/cart";
 
 	}
 
+	// ---Deduct quantity of cart item
 	@GetMapping("cartitem/minus/{id}")
 	public String decrementCartItem(@PathVariable("id") int id) {
 		CartItem item = cartItemDao.getCartItem(id);
@@ -148,18 +163,30 @@ public class UserController {
 		Product product = item.getProduct();
 		// Update cartItem
 		int oldQuantity = item.getQuantity();
-		item.setQuantity(item.getQuantity() - 1);
-		//it will deduct if item quantity is >= 0
-		if (item.getQuantity() >= 0) {
-			item.setTotalPrice(product.getPrice() * item.getQuantity());
+		item.setQuantity(item.getQuantity() -1);
+		item.setTotalPrice(product.getPrice() * item.getQuantity());
 
-			// while Updating cart, only update grandtotal as we are updating
-			// existing item quantity
-			Cart cart = item.getCart();
-			cart.setGrandTotal(cart.getGrandTotal() + (item.getQuantity() - oldQuantity) * product.getPrice());
-			cartItemDao.update(item);
-		}
+		// while Updating cart, only update grandtotal as we are updating
+		// existing item quantity
+		Cart cart = item.getCart();
+		cart.setGrandTotal(cart.getGrandTotal() + (item.getQuantity() - oldQuantity) * product.getPrice());
+		cartItemDao.update(item);
+		cartDao.update(cart);
 		return "redirect:/user/view/cart";
 
+	}
+	// ---Remove cartitem from cart
+	@GetMapping("cartitem/remove/{id}")
+	public String removeCartItem(@PathVariable("id") int id) {
+		CartItem item = cartItemDao.getCartItem(id);
+		Cart cart=item.getCart();
+		cart.setTotalItems(cart.getTotalItems()-1);
+		int newGrandTotal=(int)(cart.getGrandTotal()-item.getTotalPrice());
+		cart.setGrandTotal(newGrandTotal);
+		
+		cartDao.update(cart);
+		cartItemDao.delete(item);
+		
+		return "redirect:/user/view/cart";
 	}
 }
