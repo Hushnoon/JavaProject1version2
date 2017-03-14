@@ -33,7 +33,7 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="line2">Address Line2:</label>
 					<div class="col-sm-10">
-						<form:input type="text" path="line2" class="form-control" id="line2" placeholder="Enter email"/>
+						<form:input type="text" path="line2" class="form-control" id="line2"/>
 						<div class="has-error">
 							<form:errors path="line2" class="help-inline" />
 						</div>
@@ -42,7 +42,7 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="state">State:</label>
 					<div class="col-sm-10">
-						<form:input type="text" path="state" class="form-control" id="state" placeholder="Enter contact number"/>
+						<form:input type="text" path="state" class="form-control" id="state"/>
 						<div class="has-error">
 							<form:errors path="state" class="help-inline" />
 						</div>
@@ -51,7 +51,7 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="city">City:</label>
 					<div class="col-sm-10">
-						<form:input type="text" path="city" class="form-control" id="city" placeholder="Enter city"/>
+						<form:input type="text" path="city" class="form-control" id="city"/>
 						<div class="has-error">
 							<form:errors path="city" class="help-inline" />
 						</div>
@@ -60,7 +60,7 @@
 				<div class="form-group">
 					<label class="control-label col-sm-2" for="pincode">Pincode:</label>
 					<div class="col-sm-10">
-						<form:input type="text" path="pincode" class="form-control" id="pincode" placeholder="Enter pincode"/>
+						<form:input type="text" path="pincode" class="form-control" id="pincode"/>
 						<div class="has-error">
 							<form:errors path="pincode" class="help-inline" />
 						</div>

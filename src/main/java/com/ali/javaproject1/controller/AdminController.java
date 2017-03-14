@@ -196,10 +196,8 @@ public class AdminController {
 	// ------------Delete product
 	@GetMapping(value = { "/delete/product/{id}" })
 	public String deleteProductById(@PathVariable("id") int id) {
-		if (productDao.delete(productDao.getProduct(id))) {
-
-		}
-		return "redirect:/admin/product";
+	productDao.delete(productDao.getProduct(id));
+	return "redirect:/admin/product";
 	}
 	
 	//----------Code to upload image on server

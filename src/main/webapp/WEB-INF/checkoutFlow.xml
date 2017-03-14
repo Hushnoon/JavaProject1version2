@@ -47,5 +47,5 @@
 		<transition on="failure" to="failure"/>
 	</action-state>
 	
-	<end-state id="sucess" view="checkoutProcess/success"/>
+	<end-state id="success" view="checkoutProcess/Success"/>
 </flow>

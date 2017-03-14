@@ -10,6 +10,7 @@
 					<th>Unit Price</th>
 					<th>Quantity</th>
 					<th></th>
+					<th></th>
 				</tr>
 			</thead>
 		</table>
@@ -46,6 +47,14 @@
 									},
 									{
 										data : 'qty'
+									},
+									{
+										data : null,
+										mRender : function(data, type, row) {
+											return '<a class="btn btn-info" href="/javaproject1/view/product/'
+												+ data.id
+												+ '">View Item</a>';
+										}
 									},
 									{
 										data : null,

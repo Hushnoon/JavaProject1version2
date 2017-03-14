@@ -15,6 +15,7 @@ import com.ali.javaproject1.backend.dao.OrderDao;
 import com.ali.javaproject1.backend.dao.OrderItemDao;
 import com.ali.javaproject1.backend.dao.UserDao;
 import com.ali.javaproject1.backend.model.Address;
+import com.ali.javaproject1.backend.model.Cart;
 import com.ali.javaproject1.backend.model.CartItem;
 import com.ali.javaproject1.backend.model.OrderItem;
 import com.ali.javaproject1.backend.model.Orders;
@@ -84,9 +85,15 @@ public class CheckoutHandler {
 			orderItem.setTotalPrice(item.getTotalPrice());
 			orderItem.setOrder(order);
 			orderItemDao.add(orderItem);
-			cartItemDao.delete(item);
 		}
-		cartDao.delete(checkoutModel.getCart());
-		return "success";
+		
+		Cart cart=checkoutModel.getCart();
+		cart.setTotalItems(0);
+		cart.setGrandTotal(0);
+		cartDao.update(cart);
+		
+		cartItemDao.deleteAll(cart.getId());
+		
+	return "success";
 	}
 }

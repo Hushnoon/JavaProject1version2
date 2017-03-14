@@ -64,6 +64,11 @@
 				<%@ include file="./viewCart.jsp"%>
 			</c:if>
 			
+			<!-- Loading view product page for user -->
+			<c:if test="${UserClickViewOneProduct==true}">
+				<%@ include file="./viewProduct.jsp"%>
+			</c:if>
+
 			<!-- Loading product page for users by category -->
 			<c:if test="${userClickProducts==true}">
 				<script>

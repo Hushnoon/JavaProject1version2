@@ -1,12 +1,30 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
+<div class="row">
+	<div class="col-md-offset-2 col-md-8 jumbotron viewproductstyle">
+		<table>
+			<tr>
+				<div class="row">
+					<div class="col-md-4">
+					<td><img
+					src="/javaproject1/resources/images/product/${product.imageUrl}" />
 
-</body>
-</html>
+				</td>
+				</div>
+				<td>
+					<div class="col-md-6">
+						<h1>Product Details</h1>
+						<ul>
+							<li><h3><b>${product.name}</b></h3></li>
+							<li><b>PRODUCT DESCRIPTION:</b> ${product.description}</li>
+							<li><b>PRODUCT PRICE:</b> ${product.price}</li>
+							<li><b>AVAILABLE QUANTITY:</b> ${product.qty}</li>
+							<a class="btn btn-info"
+								href="/javaproject1/user/add/product/toCart/${product.id}"><span
+								class="glyphicon glyphicon-shopping-cart"></span>Add To Cart</a>
+						</ul>
+					</div>
+				</td>
+				</div>
+			</tr>
+		</table>
+	</div>
+</div>

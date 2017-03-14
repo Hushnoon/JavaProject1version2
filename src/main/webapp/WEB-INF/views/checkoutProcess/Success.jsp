@@ -1,13 +1,35 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
+<%@ taglib prefix="s" uri="http://www.springframework.org/tags"%>
+<%@taglib prefix = "form" uri = "http://www.springframework.org/tags/form"%>
+<%@ page isELIgnored="false"%>
 <html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
-	<h1>CONGRATULATIONS!!!</h1>
-	<h2>Successfully Placed An Order</h2>
-</body>
+	<head>
+		<title>Sign In</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		
+		<s:url value="/resources/images" var="images"/>
+		<s:url value="/resources/css" var="css"/>
+		
+		<link rel="stylesheet" type="text/css" href="${css}/singlePage.css">
+	</head>
+	<body background="${images}/background.jpg">
+		<div class="container">
+		
+		<div class="jumbotron">
+			<form:form class="form-horizontal" method="post">
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+							<h1>YOUR ORDER HAS BEEN PLACED SUCCESSFULLY!!!</h1>
+							<h3>click here hoome</h3>
+							<a class="btn btn-success" href="/javaproject1/">Home</a>
+					</div>
+				</div>
+			</form:form>
+		</div>
+	</div>
+	</body>
 </html>
