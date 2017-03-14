@@ -122,7 +122,7 @@ public class UserController {
 		User user = userDao.getUserByUsername(principal.getName());
 		Cart cart = (Cart) user.getCart();
 		ModelAndView mv = new ModelAndView("index");
-		List<CartItem> list = cart.getCartItems();
+		Set<CartItem> list = cart.getCartItems();
 		if (list.size() > 0) {
 			mv.addObject("cartItemList", list);
 		} else {

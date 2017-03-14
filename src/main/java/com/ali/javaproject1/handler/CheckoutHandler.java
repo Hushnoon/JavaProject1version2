@@ -1,7 +1,7 @@
 package com.ali.javaproject1.handler;
 
 import java.security.Principal;
-import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,8 +16,8 @@ import com.ali.javaproject1.backend.dao.OrderItemDao;
 import com.ali.javaproject1.backend.dao.UserDao;
 import com.ali.javaproject1.backend.model.Address;
 import com.ali.javaproject1.backend.model.CartItem;
-import com.ali.javaproject1.backend.model.Order;
 import com.ali.javaproject1.backend.model.OrderItem;
+import com.ali.javaproject1.backend.model.Orders;
 import com.ali.javaproject1.backend.model.User;
 
 @Component
@@ -56,25 +56,27 @@ public class CheckoutHandler {
 		checkoutModel.setAddress(address);
 
 	}
-
-	public void setShippingAddress(CheckoutModel checkoutModel)
+	
+	public void setShippingAddress(CheckoutModel checkoutModel, int addressid)
 	{
 		
-		Address address=addressDao.getAddress(checkoutModel.getAddressid());
+		System.out.println(addressid);
+/*		Address address=addressDao.getAddress(checkoutModel.getAddressid());
 		checkoutModel.setAddress(address);
 		System.out.println("Shipping Address");
 		System.out.println(checkoutModel.getAddressid());
+*/		
 	}
 	
 	public String saveOrder(CheckoutModel checkoutModel) {
-		Order order = new Order();
+		Orders order = new Orders();
 		order.setUser(checkoutModel.getUser());
 		order.setShippingAddress(checkoutModel.getAddress());
 		order.setTotalItems(checkoutModel.getCart().getTotalItems());
 		order.setGrandTotal(checkoutModel.getCart().getGrandTotal());
 		orderDao.add(order);
-		OrderItem orderItem = null;
-		List<CartItem> cartItemList = checkoutModel.getCartItemList();
+		OrderItem orderItem = new OrderItem();
+		Set<CartItem> cartItemList = checkoutModel.getCartItemList();
 
 		for (CartItem item : cartItemList) {
 			orderItem.setProduct(item.getProduct());
@@ -82,7 +84,9 @@ public class CheckoutHandler {
 			orderItem.setTotalPrice(item.getTotalPrice());
 			orderItem.setOrder(order);
 			orderItemDao.add(orderItem);
+			cartItemDao.delete(item);
 		}
+		cartDao.delete(checkoutModel.getCart());
 		return "success";
 	}
 }

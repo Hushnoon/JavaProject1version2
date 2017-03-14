@@ -17,11 +17,13 @@
 	<!-- if not specified the first view state is the starting state -->
 	<view-state id="start" view="checkoutProcess/checkout" 	model="flowscope.checkoutModel">
 		<transition on="add" to="addShippingAddress" />
-		<transition on="next" to="orderSummary"/>
-		<on-exit>
-			<evaluate expression="checkoutHandler.setShippingAddress(checkoutModel)"></evaluate>
-		</on-exit>
+		<transition on="next" to="beforeOrderSummary"/>
 	</view-state>
+	
+	<action-state id="beforeOrderSummary">
+		<evaluate expression="checkoutHandler.setShippingAddress(flowScope.checkoutModel, checkoutModel.addressid)"/>
+		<transition on="success" to="orderSummary"/>
+	</action-state>
 
 	<view-state id="addShippingAddress" view="checkoutProcess/newaddress" model="address">
 		<transition on="add" to="orderSummary" />

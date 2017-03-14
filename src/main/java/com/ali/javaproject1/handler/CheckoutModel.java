@@ -1,14 +1,15 @@
 package com.ali.javaproject1.handler;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.ali.javaproject1.backend.model.Address;
 import com.ali.javaproject1.backend.model.Cart;
 import com.ali.javaproject1.backend.model.CartItem;
-import com.ali.javaproject1.backend.model.Order;
 import com.ali.javaproject1.backend.model.OrderItem;
+import com.ali.javaproject1.backend.model.Orders;
 import com.ali.javaproject1.backend.model.User;
 
 public class CheckoutModel implements Serializable{
@@ -18,16 +19,16 @@ public class CheckoutModel implements Serializable{
 	private User user;
 	private Address address;
 	private OrderItem orderItem;
-	private Order order;
-	private List<CartItem> cartItemList;
+	private Orders order;
+	private Set<CartItem> cartItemList;
 	public CheckoutModel()
 	{
 		cart=new Cart();
 		user=new User();
 		address=new Address();
 		orderItem=new OrderItem();
-		order=new Order();
-		cartItemList=new ArrayList<CartItem>();
+		order=new Orders();
+		cartItemList=new HashSet<CartItem>();
 	}
 
 	public int getAddressid() {
@@ -38,11 +39,11 @@ public class CheckoutModel implements Serializable{
 		this.addressid = addressid;
 	}
 
-	public List<CartItem> getCartItemList() {
+	public Set<CartItem> getCartItemList() {
 		return cartItemList;
 	}
 
-	public void setCartItemList(List<CartItem> cartItemList) {
+	public void setCartItemList(Set<CartItem> cartItemList) {
 		this.cartItemList = cartItemList;
 	}
 
@@ -78,11 +79,11 @@ public class CheckoutModel implements Serializable{
 		this.orderItem = orderItem;
 	}
 
-	public Order getOrder() {
+	public Orders getOrder() {
 		return order;
 	}
 
-	public void setOrder(Order order) {
+	public void setOrder(Orders order) {
 		this.order = order;
 	}
 
